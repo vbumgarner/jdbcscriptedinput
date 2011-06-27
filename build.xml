@@ -1,0 +1,74 @@
+<project name="splunkjdbcscriptedinput" default="dist" basedir=".">
+	<description>
+        build file
+    </description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src" />
+	<property name="test" location="test" />
+	<property name="build" location="build" />
+	<property name="test" location="test" />
+	<property name="test_build" location="test_build" />
+	<property name="dist" location="dist" />
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+
+		<property file="build.properties" prefix="build" />
+		<echo message="${build.release.version}" />
+
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}" />
+		<mkdir dir="${test_build}" />
+		<mkdir dir="${test_build}/reports" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source ">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}" />
+	</target>
+
+	<target name="compile_tests" depends="init" description="compile the source ">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${test}" destdir="${test_build}">
+			<classpath>
+				<pathelement location="lib/junit.jar" />
+				<pathelement location="${build}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="test" depends="compile,compile_tests" description="compile the source ">
+		<!-- Run the tests in ${test} -->
+		<junit>
+			<classpath>
+				<pathelement location="lib/junit.jar" />
+				<pathelement location="${build}" />
+				<pathelement location="${test_build}" />
+				<pathelement path="${java.class.path}" />
+			</classpath>
+
+			<formatter type="plain" />
+
+			<batchtest fork="yes" todir="${test_build}/reports">
+				<fileset dir="${test}">
+					<include name="**/*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="dist" depends="test" description="generate the distribution">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/lib" />
+
+		<!-- Put everything in ${build} into the splunkjdbcscriptedinput-${build.release.version}.jar file -->
+		<jar jarfile="${dist}/lib/splunkjdbcscriptedinput-${build.release.version}.jar" basedir="${build}" />
+	</target>
+
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+</project>
