@@ -9,7 +9,7 @@ public class Config {
 	public static final String INTERVAL_KEY = "interval";
 	public static final String PROCESS_LIFETIME_KEY = "processLifetime";
 	public static final int INTERVAL_DEFAULT = 60;
-	private static final int PROCESS_LIFETIME_DEFAULT = 300;
+	public static final int PROCESS_LIFETIME_DEFAULT = 300;
 
 	public static final String DRIVER_CLASS_KEY = "driverClass";
 	public static final String CONNECTION_STRING_KEY = "connectionString";
@@ -21,7 +21,7 @@ public class Config {
 	// private static String PASSWORD_KEY = "password";
 
 	// private File propsFile;
-	private final String driverClass;
+	private String driverClass;
 	private String connectionString;
 	private String iteratorField;
 	private String format;
@@ -41,28 +41,20 @@ public class Config {
 	// return properties.getProperty(PASSWORD_KEY);
 	// }
 
-	public Config(String driverClass, String connectionString,
-			String iteratorField, String format, String query, int interval, int processLifetime) {
-		this.driverClass = driverClass;
-		this.connectionString = connectionString;
-		this.iteratorField = iteratorField;
-		this.format = format;
-		this.query = query;
-		this.interval = interval;
-		this.processLifetime = processLifetime;
+	private Config() {
 	}
 
 	public static Config fromProperties(Properties properties)
 			throws IOException {
-		return new Config(
-				getStringOrThrow( properties, DRIVER_CLASS_KEY ),
-				getStringOrThrow( properties, CONNECTION_STRING_KEY), 
-				getStringOrThrow( properties, ITERATOR_FIELD_KEY), 
-				getStringOrThrow( properties, FORMAT_KEY), 
-				getStringOrThrow( properties, QUERY_KEY),
-				getInt(properties, INTERVAL_KEY, INTERVAL_DEFAULT),
-				getInt(properties, PROCESS_LIFETIME_KEY, PROCESS_LIFETIME_DEFAULT)
-				);
+		Config config = new Config();
+		config.driverClass = getStringOrThrow( properties, DRIVER_CLASS_KEY );
+		config.connectionString = getStringOrThrow( properties, CONNECTION_STRING_KEY); 
+		config.iteratorField = getStringOrThrow( properties, ITERATOR_FIELD_KEY);
+		config.format = getStringOrThrow( properties, FORMAT_KEY);
+		config.driverClass = getStringOrThrow( properties, QUERY_KEY);
+		config.interval = getInt(properties, INTERVAL_KEY, INTERVAL_DEFAULT);
+		config.processLifetime = getInt(properties, PROCESS_LIFETIME_KEY, PROCESS_LIFETIME_DEFAULT);
+		return config;
 	}
 
 	protected static int getInt(Properties properties, String k,
