@@ -51,7 +51,7 @@ public class Config {
 		config.connectionString = getStringOrThrow( properties, CONNECTION_STRING_KEY); 
 		config.iteratorField = getStringOrThrow( properties, ITERATOR_FIELD_KEY);
 		config.format = getStringOrThrow( properties, FORMAT_KEY);
-		config.driverClass = getStringOrThrow( properties, QUERY_KEY);
+		config.query = getStringOrThrow( properties, QUERY_KEY);
 		config.interval = getInt(properties, INTERVAL_KEY, INTERVAL_DEFAULT);
 		config.processLifetime = getInt(properties, PROCESS_LIFETIME_KEY, PROCESS_LIFETIME_DEFAULT);
 		return config;
