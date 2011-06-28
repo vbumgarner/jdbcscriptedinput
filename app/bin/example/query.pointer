@@ -1,0 +1,2 @@
+lastValue=0
+#this is the last value seen, and will be used in the query specified in the properties file.

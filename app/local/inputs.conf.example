@@ -1,9 +1,12 @@
-[script://./bin/example.sh]
+[script://./bin/run.sh example]
 interval = 60
 sourcetype = jdbc
 source = jdbc
 #index = jdbc
 disabled = 1
 
-#to create more queries, duplicate the stanza above, and all three example 
+#to create more queries, duplicate the stanza above.
+#Make a copy of bin/example
+#Replace example with the new name
+#Make appropriate changes to query.properties and query.pointer
 #files in bin
