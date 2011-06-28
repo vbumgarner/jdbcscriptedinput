@@ -24,7 +24,5 @@ public class Columns {
 	public List<Column> getColumns() {
 		return columns;
 	}
-	
-	
 
 }

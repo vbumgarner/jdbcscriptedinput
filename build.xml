@@ -1,7 +1,5 @@
 <project name="splunkjdbcscriptedinput" default="dist" basedir=".">
-	<description>
-        build file
-    </description>
+	<description>build file</description>
 	<!-- set global properties for this build -->
 	<property name="src" location="src" />
 	<property name="test" location="test" />
@@ -10,7 +8,13 @@
 	<property name="test_build" location="test_build" />
 	<property name="dist" location="dist" />
 
-	<target name="init">
+    <target name="clean">
+        <delete dir="${dist}"/>
+        <delete dir="${build}"/>
+        <delete dir="${test_build}"/>
+    </target>
+
+	<target name="init" depends="clean">
 		<!-- Create the time stamp -->
 		<tstamp />
 
@@ -63,12 +67,28 @@
 		<mkdir dir="${dist}/lib" />
 
 		<!-- Put everything in ${build} into the splunkjdbcscriptedinput-${build.release.version}.jar file -->
-		<jar jarfile="${dist}/lib/splunkjdbcscriptedinput-${build.release.version}.jar" basedir="${build}" />
+		<jar jarfile="${dist}/lib/${build.name}-${build.release.version}.jar" basedir="${build}" />
 	</target>
 
-	<target name="clean" description="clean up">
-		<!-- Delete the ${build} and ${dist} directory trees -->
-		<delete dir="${build}" />
-		<delete dir="${dist}" />
+	<target name="splunkapp" depends="dist" description="generate the splunk app">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/splunkapp/${build.name}" />
+
+		<copy todir="${dist}/splunkapp/${build.name}">
+			<fileset dir="app" excludes="**/*.jar" />
+		</copy>
+
+		<!-- Put everything in ${build} into the splunkjdbcscriptedinput-${build.release.version}.jar file -->
+		<copy
+			file="${dist}/lib/${build.name}-${build.release.version}.jar"
+			todir="${dist}/splunkapp/${build.name}/bin/lib/" />
+
+		<tar destfile="${dist}/splunkapp/${build.name}.spl"
+		     basedir="${dist}/splunkapp"
+		     excludes=".*" />
+
 	</target>
+
 </project>
+
+

@@ -48,6 +48,8 @@ public class Query {
 	}
 
 	public String getStringValue(ResultSet rs, Column c) throws SQLException {
+		//TODO actually do something other than getString here, based on the column type?
+
 		// switch (c.getType()) {
 		// case Types.DATE:
 		// return formatDate(rs.getDate(c.getName()));
@@ -62,7 +64,6 @@ public class Query {
 		// break;
 		// }
 
-		// TODO Auto-generated method stub
 		return rs.getString(c.getName());
 	}
 }

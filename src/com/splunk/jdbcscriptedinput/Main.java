@@ -1,8 +1,6 @@
 package com.splunk.jdbcscriptedinput;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.util.Map;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -26,21 +24,8 @@ public class Main {
 			System.exit(-1);
 		}
 		Pointer pointer = new Pointer(pointerFile);
-
-		Query q = new Query(config,pointer.getPointer());
-		ResultSet rs = q.getResults();
-
-		Columns cols = new Columns(rs);
-		Formatter formatter = new Formatter(config);
-		try {
-			while (rs.next()) {
-				Map<String, String> row = q.buildValues(rs, cols);
-				String output = formatter.format(row, cols);
-				System.out.println(output);
-				pointer.setPointer( row.get(config.getIteratorField()) );
-			}
-		} finally {
-			pointer.commit();
-		}
+		
+		QueryRunner qr = new QueryRunner(config,pointer);
+		qr.run();
 	}
 }

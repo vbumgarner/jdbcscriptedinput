@@ -1,0 +1,9 @@
+[script://./bin/example.sh]
+interval = 60
+sourcetype = jdbc
+source = jdbc
+#index = jdbc
+disabled = 1
+
+#to create more queries, duplicate the stanza above, and all three example 
+#files in bin

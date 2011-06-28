@@ -13,26 +13,32 @@ public class Pointer {
 	private File propsFile;
 	private Properties properties;
 
-	public Pointer(File file) throws IOException {
+	public Pointer(File file) {
 		this.propsFile = file;
-
-		this.properties = new Properties();
-		properties.load(new FileInputStream(file));
 	}
 
-	public String getPointer() {
+	public String getPointer() throws IOException {
+		read();
 		String lv = properties.getProperty(LAST_VALUE_KEY);
-		if( lv == null ) {
+		if (lv == null) {
 			return "0";
 		}
 		return lv;
 	}
 
 	public void setPointer(String value) {
-		properties.setProperty(LAST_VALUE_KEY,value);
+		properties.setProperty(LAST_VALUE_KEY, value);
+		write();
 	}
 
-	public void commit() {
+	// in case the user wants to change the pointer file out from under us,
+	// let's read it and write it every time.
+	private void read() throws IOException {
+		this.properties = new Properties();
+		properties.load(new FileInputStream(propsFile));
+	}
+
+	private void write() {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(propsFile);
