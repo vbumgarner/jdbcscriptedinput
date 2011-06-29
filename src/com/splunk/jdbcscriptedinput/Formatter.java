@@ -13,7 +13,6 @@ public class Formatter {
 	}
 
 	public String format(Map<String,String> vals, Columns cols) {
-//		Map<String,String> vals = Utilities buildValues( rs,cols );
 		if( config.getFormat() != null ) {
 			return fillFormat( vals );
 		} else {
@@ -21,6 +20,20 @@ public class Formatter {
 		}
 	}
 
+	//if there is a format, then just do naive string replacements.
+	private String fillFormat(Map<String, String> vals) {
+		String dest = config.getFormat();
+		for( String k : vals.keySet() ) {
+			String val = vals.get(k);
+			if( val == null ) {
+				val = "";
+			}
+			dest = dest.replace( "${" + k + "}", val );
+		}
+		return dest;
+	}
+
+	//if there is no format, then spit out the data in the order it comes out, using k="v"
 	private String kvFormat(Map<String, String> vals) {
 		StringBuffer sb = new StringBuffer();
 		for( String k : vals.keySet() ) {
@@ -34,27 +47,16 @@ public class Formatter {
 		return sb.toString();
 	}
 
+	//check each character, and if it's in ESCAPE_CHARS, put a backslash up front
 	private String escapeValueToBeQuoted(String string) {
 		StringBuffer sb = new StringBuffer();
 		for( char c : string.toCharArray() ) {
 			if ( Arrays.binarySearch(ESCAPE_CHARS,c) > -1 ) {
-				sb.append("/");
+				sb.append("\\");
 			}
 			sb.append(c);
 		}
 		return sb.toString();
-	}
-
-	private String fillFormat(Map<String, String> vals) {
-		String dest = config.getFormat();
-		for( String k : vals.keySet() ) {
-			String val = vals.get(k);
-			if( val == null ) {
-				val = "";
-			}
-			dest = dest.replace( "${" + k + "}", val );
-		}
-		return dest;
 	}
 
 }
