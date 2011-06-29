@@ -16,7 +16,7 @@ Using it:
 2. In bin/foo/query.properties, change the first four properties, driverClass,connectionString,iteratorField, and query.
    The properites are documented in the properties file.
 3. In bin/foo/query.pointer, change lastValue to a value that is relevant to your query in query.properties.
-3. Create an entry in local/inputs.conf for your new script. local/inputs.conf.example is a template.
+3. Create an entry in local/inputs.conf for your new script. local/inputs.conf.example is a template. Do not edit the value for sourcetype.
 4. Place your jdbc jar(s) on the classpath.
    If you place the jar(s) in bin/lib, run.sh will pick them up.
    If you want to put them somewhere else, you will need to edit the script or place them somewhere that java will look for them by default. 
@@ -32,6 +32,12 @@ This log is indexed by default, and can be searched in splunk using this query:
   index=_internal source="*jdbcscriptedinput.foo.log"
 
 To start over, simply edit bin/foo/query.pointer.
+
+
+Advanced configuration notes:
+  Currently, a newline with 12 asterisks is used to separate entries. This is tied to source::jdbc in props.conf.
+  If you wish to change the source, props.conf will need to be modified to match.
+  In a distributed environment, props.conf will need to be installed on the indexers.
 
 
 Please let me know what features would be useful.
