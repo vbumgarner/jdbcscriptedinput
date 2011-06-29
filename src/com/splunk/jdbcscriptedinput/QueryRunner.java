@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class QueryRunner {
 
+	public final String LINE_BREAKER="************";
+
 	private Config config;
 	private Pointer pointer;
 
@@ -32,19 +34,30 @@ public class QueryRunner {
 		try {
 			// loop and sleep
 			while (System.currentTimeMillis() < quitAfter) {
-				Query q = new Query(config, pointer.getPointer(), conn);
+				String pointerVal = pointer.getPointer();
+				Query q = new Query(config, pointerVal, conn);
 				ResultSet rs = q.getResults();
 
 				// build the colums from the resultset metadata
 				Columns cols = new Columns(rs);
 
 				// loop through the records
-				while (rs.next()) {
-					Map<String, String> row = q.buildValues(rs, cols);
-					String output = formatter.format(row);
-					System.out.println(output);
-					pointer.setPointer(row.get(config.getIteratorField()));
+				int rowCount = 0;
+				try {
+					while (rs.next()) {
+						Map<String, String> row = q.buildValues(rs, cols);
+						String output = formatter.format(row);
+						System.out.println(output);
+						System.out.println(LINE_BREAKER);
+						pointerVal = row.get(config.getIteratorField());
+						rowCount++;
+					}
+				} finally {
+					pointer.setPointer(pointerVal);
 				}
+
+				System.err.println("Retrieved and printed "
+						+ Integer.toString(rowCount) + " rows.");
 
 				// pause between invocations
 				Thread.sleep(sleepTime * 1000);
@@ -57,6 +70,6 @@ public class QueryRunner {
 	private Connection buildConnection() throws Exception {
 		Class.forName(config.getDriverClass()).newInstance();
 		return DriverManager.getConnection(config.getConnectionString());
-		//do some drivers require the user and password to be handed in?
+		// do some drivers require the user and password to be handed in?
 	}
 }

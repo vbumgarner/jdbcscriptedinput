@@ -41,7 +41,7 @@ public class Formatter {
 				sb.append( k );
 				sb.append( "=\"" );
 				sb.append( escapeValueToBeQuoted( vals.get(k) ) );
-				sb.append( "\" " );
+				sb.append( "\"\n" );
 			}
 		}
 		return sb.toString().trim();
