@@ -14,5 +14,5 @@ mv $LOG_PATH.3 $LOG_PATH.4
 mv $LOG_PATH.2 $LOG_PATH.3
 mv $LOG_PATH.1 $LOG_PATH.2
 mv $LOG_PATH $LOG_PATH.1
-java -cp .:lib/* -Dlog4j.configuration=lib/log4j.xml com.splunk.jdbcscriptedinput.Main $QUERY_NAME/query.properties $QUERY_NAME/query.pointer 2> $LOG_PATH
+java -cp .:lib/* com.splunk.jdbcscriptedinput.Main $QUERY_NAME/query.properties $QUERY_NAME/query.pointer 2> $LOG_PATH
 #edit the classpath as needed

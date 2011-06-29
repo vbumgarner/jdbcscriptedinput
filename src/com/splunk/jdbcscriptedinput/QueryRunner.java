@@ -65,6 +65,7 @@ public class QueryRunner {
 				// pause between invocations
 				Thread.sleep(sleepTime * 1000);
 			}
+			logger.info("Time expired. Ending query loop.");
 		} finally {
 			conn.close();
 		}

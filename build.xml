@@ -41,6 +41,10 @@
 			  <src path="${src}"/>
 			  <classpath refid="compile-classpath"/>
 		</javac>
+
+		<copy todir="${build}">
+			<fileset dir="${src}" />
+		</copy>
 	</target>
 
 	<target name="compile_tests" depends="init" description="compile the source ">

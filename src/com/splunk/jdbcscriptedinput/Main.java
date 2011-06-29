@@ -3,11 +3,14 @@ package com.splunk.jdbcscriptedinput;
 import java.io.File;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 
 public class Main {
 	private static final Logger logger = Logger.getLogger(Main.class);
 
 	public static void main(String[] args) {
+		DOMConfigurator.configure(Main.class.getResource("log4j.xml"));
+
 		try {
 			if (args.length < 2) {
 				logger.error("Usage: java com.splunk.jdbcscriptedinput.Main queryType.properties queryType.pointer");
