@@ -39,27 +39,30 @@ public class Formatter {
 		for( String k : vals.keySet() ) {
 			if( vals.get(k) != null ) {
 				sb.append( k );
-				sb.append( "=\"" );
-				sb.append( escapeValueToBeQuoted( vals.get(k) ) );
-				sb.append( "\"\n" );
+//				sb.append( "=\"" );
+				sb.append( "=" );
+				sb.append( vals.get(k) );
+//				sb.append( escapeValueToBeQuoted( vals.get(k) ) );
+				sb.append( "\n" );
+//				sb.append( "\"\n" );
 			}
 		}
 		return sb.toString().trim();
 	}
 
 	//check each character, and if it's in ESCAPE_CHARS, put a backslash up front
-	public String escapeValueToBeQuoted(String string) {
-		StringBuffer sb = new StringBuffer();
-		for( char c : string.toCharArray() ) {
-			for( char r : ESCAPE_CHARS ) {
-				if( c==r ) {
-					sb.append("\\");
-					break;
-				}
-			}
-			sb.append(c);
-		}
-		return sb.toString();
-	}
+//	public String escapeValueToBeQuoted(String string) {
+//		StringBuffer sb = new StringBuffer();
+//		for( char c : string.toCharArray() ) {
+//			for( char r : ESCAPE_CHARS ) {
+//				if( c==r ) {
+//					sb.append("\\");
+//					break;
+//				}
+//			}
+//			sb.append(c);
+//		}
+//		return sb.toString();
+//	}
 
 }
