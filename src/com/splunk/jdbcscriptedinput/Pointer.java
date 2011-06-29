@@ -7,7 +7,11 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 public class Pointer {
+	private final static Logger logger = Logger.getLogger(Pointer.class); 
+		
 	private static String LAST_VALUE_KEY = "lastValue";
 
 	private File propsFile;
@@ -44,12 +48,12 @@ public class Pointer {
 			fos = new FileOutputStream(propsFile);
 			properties.store(fos, "Last run " + new Date().toString());
 		} catch (Exception e) {
-			e.printStackTrace(System.err);
+			logger.error(e);
 		} finally {
 			try {
 				fos.close();
 			} catch (IOException e) {
-				e.printStackTrace(System.err);
+				logger.error(e);
 			}
 		}
 	}

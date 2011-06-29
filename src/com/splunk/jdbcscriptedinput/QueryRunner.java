@@ -5,9 +5,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.Map;
 
-public class QueryRunner {
+import org.apache.log4j.Logger;
 
-	public final String LINE_BREAKER="************";
+public class QueryRunner {
+	private final static Logger logger = Logger.getLogger(QueryRunner.class);
+
+	public final String LINE_BREAKER = "************";
 
 	private Config config;
 	private Pointer pointer;
@@ -56,7 +59,7 @@ public class QueryRunner {
 					pointer.setPointer(pointerVal);
 				}
 
-				System.err.println("Retrieved and printed "
+				logger.info("Retrieved and printed "
 						+ Integer.toString(rowCount) + " rows.");
 
 				// pause between invocations
