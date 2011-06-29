@@ -31,10 +31,9 @@ Thumbs.db
 .classpath
 .project
 .settings
-build.properties
-build.xml
-dist
-test_build
+/build
+/dist
+/test_build
 /bin
 
 mysql.*.jar
