@@ -1,7 +1,6 @@
 package com.splunk.jdbcscriptedinput;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,28 +13,16 @@ public class Query {
 	private final Connection conn;
 	private String pointerValue;
 
-	public Query(Config conf, String pointerValue) throws Exception {
+	public Query(Config conf, String pointerValue, Connection conn) throws Exception {
 		this.config = conf;
 		this.pointerValue = pointerValue;
-
-		Class.forName(conf.getDriverClass()).newInstance();
-		conn = DriverManager.getConnection(conf.getConnectionString());
+		this.conn = conn;
 	}
 
 	public ResultSet getResults() throws SQLException {
 		String query = config.buildQuery(pointerValue);
 		Statement st = conn.createStatement();
 		return st.executeQuery(query);
-	}
-
-	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(
-				config.getConnectionString()
-				);
-	}
-
-	public void close() throws SQLException {
-		conn.close();
 	}
 
 	public Map<String, String> buildValues(ResultSet rs, Columns cols)
