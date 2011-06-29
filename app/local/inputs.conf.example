@@ -9,3 +9,6 @@ source = jdbc
 #2. Duplicate bin/example to bin/foo
 #3. duplicate the stanza above, replacing example with foo.
 #4. Make appropriate changes to bin/foo/query.properties and bin/foo/query.pointer
+#
+#NOTES
+#If you change source, then copy default/props.conf to local/ and update the settings there. This is required to accurately break entries into events.
