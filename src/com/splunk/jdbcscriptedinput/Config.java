@@ -16,11 +16,7 @@ public class Config {
 	public static final String ITERATOR_FIELD_KEY = "iteratorField";
 	public static final String FORMAT_KEY = "format";
 	public static final String QUERY_KEY = "query";
-	// private static String OUTPUT_FILE_KEY = "outputFile";
-	// private static String USER_KEY = "user";
-	// private static String PASSWORD_KEY = "password";
 
-	// private File propsFile;
 	private String driverClass;
 	private String connectionString;
 	private String iteratorField;
@@ -32,14 +28,6 @@ public class Config {
 	public String getIteratorField() {
 		return iteratorField;
 	}
-
-	// public String getUser() {
-	// return properties.getProperty(USER_KEY);
-	// }
-
-	// public String getPassword() {
-	// return properties.getProperty(PASSWORD_KEY);
-	// }
 
 	private Config() {
 	}
@@ -85,10 +73,6 @@ public class Config {
 
 		return fromProperties(props);
 	}
-
-	// public String getOutputFile() {
-	// return outputFile;
-	// }
 
 	public String getDriverClass() {
 		return driverClass;
