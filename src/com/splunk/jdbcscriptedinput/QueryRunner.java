@@ -25,7 +25,7 @@ public class QueryRunner {
 		long quitAfter = System.currentTimeMillis() + (runTime * 1000);
 
 		// a formatter object for later
-		Formatter formatter = new Formatter(config);
+		Formatter formatter = new Formatter(config.getFormat());
 
 		Connection conn = buildConnection();
 
@@ -41,7 +41,7 @@ public class QueryRunner {
 				// loop through the records
 				while (rs.next()) {
 					Map<String, String> row = q.buildValues(rs, cols);
-					String output = formatter.format(row, cols);
+					String output = formatter.format(row);
 					System.out.println(output);
 					pointer.setPointer(row.get(config.getIteratorField()));
 				}

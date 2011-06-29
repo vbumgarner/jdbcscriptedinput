@@ -80,5 +80,4 @@ public class ConfigTest extends TestCase {
 			System.out.println( "Failed as expected retrieving invalid key." );
 		}
 	}
-
 }

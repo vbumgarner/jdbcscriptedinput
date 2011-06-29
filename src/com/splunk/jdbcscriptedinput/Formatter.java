@@ -1,19 +1,19 @@
 package com.splunk.jdbcscriptedinput;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public class Formatter {
 
-	private Config config;
 	public static final char[] ESCAPE_CHARS = {'\\','"'};
 
-	public Formatter(Config config) {
-		this.config = config;
+	private final String format;
+
+	public Formatter(String format) {
+		this.format = format;
 	}
 
-	public String format(Map<String,String> vals, Columns cols) {
-		if( config.getFormat() != null ) {
+	public String format(Map<String,String> vals) {
+		if( format != null ) {
 			return fillFormat( vals );
 		} else {
 			return kvFormat( vals );
@@ -21,8 +21,8 @@ public class Formatter {
 	}
 
 	//if there is a format, then just do naive string replacements.
-	private String fillFormat(Map<String, String> vals) {
-		String dest = config.getFormat();
+	public String fillFormat(Map<String, String> vals) {
+		String dest = format;
 		for( String k : vals.keySet() ) {
 			String val = vals.get(k);
 			if( val == null ) {
@@ -34,7 +34,7 @@ public class Formatter {
 	}
 
 	//if there is no format, then spit out the data in the order it comes out, using k="v"
-	private String kvFormat(Map<String, String> vals) {
+	public String kvFormat(Map<String, String> vals) {
 		StringBuffer sb = new StringBuffer();
 		for( String k : vals.keySet() ) {
 			if( vals.get(k) != null ) {
@@ -44,15 +44,18 @@ public class Formatter {
 				sb.append( "\" " );
 			}
 		}
-		return sb.toString();
+		return sb.toString().trim();
 	}
 
 	//check each character, and if it's in ESCAPE_CHARS, put a backslash up front
-	private String escapeValueToBeQuoted(String string) {
+	public String escapeValueToBeQuoted(String string) {
 		StringBuffer sb = new StringBuffer();
 		for( char c : string.toCharArray() ) {
-			if ( Arrays.binarySearch(ESCAPE_CHARS,c) > -1 ) {
-				sb.append("\\");
+			for( char r : ESCAPE_CHARS ) {
+				if( c==r ) {
+					sb.append("\\");
+					break;
+				}
 			}
 			sb.append(c);
 		}
