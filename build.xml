@@ -86,12 +86,11 @@
 		<mkdir dir="${dist}/splunkapp/${build.name}" />
 
 		<copy todir="${dist}/splunkapp/${build.name}">
-			<fileset dir="app" excludes="**/*.jar" />
+			<fileset dir="app" />
 		</copy>
 
 		<!-- Put everything in ${build} into the splunkjdbcscriptedinput-${build.release.version}.jar file -->
 		<copy file="${dist}/lib/${build.name}-${build.release.version}.jar" todir="${dist}/splunkapp/${build.name}/bin/lib/" />
-
 
 		<tar longfile="gnu" destfile="${dist}/splunkapp/${build.name}.spl" compression="gzip">
 			<tarfileset dir="${dist}/splunkapp" filemode="755">
