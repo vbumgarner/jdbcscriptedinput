@@ -1,0 +1,23 @@
+[]
+access = read : [ * ], write : [ admin, power ]
+
+[props]
+export = system
+
+[transforms]
+export = system
+
+[viewstates]
+access = read : [ * ], write : [ * ]
+
+[lookups]
+export = system
+
+[commands]
+export = system
+access = read : [ * ], write : [ admin ]
+
+[searchbnf]
+export = system
+
+
