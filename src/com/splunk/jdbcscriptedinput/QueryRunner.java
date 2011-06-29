@@ -57,5 +57,6 @@ public class QueryRunner {
 	private Connection buildConnection() throws Exception {
 		Class.forName(config.getDriverClass()).newInstance();
 		return DriverManager.getConnection(config.getConnectionString());
+		//do some drivers require the user and password to be handed in?
 	}
 }
