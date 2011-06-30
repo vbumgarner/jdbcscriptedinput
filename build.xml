@@ -91,6 +91,9 @@
 
 		<copy todir="${dist}/splunkapp/${build.name}">
 			<fileset dir="app" />
+			  <filterset>
+			    <filter token="build.release.version" value="${build.release.version}"/>
+			  </filterset>
 		</copy>
 
 		<!-- Put everything in ${build} into the splunkjdbcscriptedinput-${build.release.version}.jar file -->
