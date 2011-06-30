@@ -13,6 +13,8 @@ public class Config {
 
 	public static final String DRIVER_CLASS_KEY = "driverClass";
 	public static final String CONNECTION_STRING_KEY = "connectionString";
+	public static final String USERNAME_KEY = "username";
+	public static final String PASSWORD_KEY = "password";
 	public static final String ITERATOR_FIELD_KEY = "iteratorField";
 	public static final String FORMAT_KEY = "format";
 	public static final String QUERY_KEY = "query";
@@ -24,6 +26,8 @@ public class Config {
 	private String query;
 	private int interval;
 	private int processLifetime;
+	private String username;
+	private String password;
 
 	public String getIteratorField() {
 		return iteratorField;
@@ -37,12 +41,24 @@ public class Config {
 		Config config = new Config();
 		config.driverClass = getStringOrThrow( properties, DRIVER_CLASS_KEY );
 		config.connectionString = getStringOrThrow( properties, CONNECTION_STRING_KEY); 
+
+		config.username = properties.getProperty(USERNAME_KEY);
+		config.password = properties.getProperty(PASSWORD_KEY);
+
 		config.iteratorField = getStringOrThrow( properties, ITERATOR_FIELD_KEY);
 		config.format = properties.getProperty(FORMAT_KEY);
 		config.query = getStringOrThrow( properties, QUERY_KEY);
 		config.interval = getInt(properties, INTERVAL_KEY, INTERVAL_DEFAULT);
 		config.processLifetime = getInt(properties, PROCESS_LIFETIME_KEY, PROCESS_LIFETIME_DEFAULT);
 		return config;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	protected static int getInt(Properties properties, String k,
